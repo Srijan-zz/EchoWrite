@@ -1,6 +1,6 @@
 import HeaderE from './Header/HeaderE'
 import FooterE from './Footer/FooterE'
-import ContainerE from './container/Container'
+import ContainerE from './Container/Container'
 import Logo from './Logo'
 import LogoutBtn from './header/LogoutBtn'
 import Button from '../component/Button'
