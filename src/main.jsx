@@ -11,7 +11,7 @@ import AllPost from './Pages/AllPost.jsx'
 import EditPost from './Pages/EditPost.jsx'
 import Post from './Pages/Post.jsx'
 import AddPost from './Pages/AddPost.jsx'
-import Signup from './Pages/SignUp.jsx'
+import Signup from './Pages/Signup.jsx'
 
 import { AuthLayout, Login } from './component/index.js'
 
