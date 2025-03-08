@@ -1,6 +1,6 @@
 import HeaderE from './Header/HeaderE'
 import FooterE from './Footer/FooterE'
-import ContainerE from './container/container'
+import ContainerE from './container/Container'
 import Logo from './Logo'
 import LogoutBtn from './header/LogoutBtn'
 import Button from '../component/Button'
@@ -10,7 +10,7 @@ import SignUp from './SignUp'
 import Login from './Login'
 import Select from './Select'
 import PostForm from './post-form/PostForm'
-import Postcard from './Postcard'
+import Postcard from './PostCard'
 import AuthLayout from'./AuthLayout'
 
 
