@@ -3,7 +3,8 @@ import {ContainerE as Container, Logo , LogoutBtn }from '../index'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-
+import { Squash as Hamburger } from "hamburger-react";
+import { AnimatePresence, motion } from "framer-motion";
 
 
 function HeaderE() {
@@ -52,6 +53,8 @@ function HeaderE() {
                 <Logo width='70px'/>
             </Link>
           </div>
+
+           <div className='text-gray-950 text-2xl font-bold px-2 py-2 m-1'>EchoWrite</div>                
 
           <ul className='flex ml-auto'>
                
