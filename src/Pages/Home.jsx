@@ -1,7 +1,7 @@
 import React, {useEffect,useState} from 'react'
 import appwriteService from '../appwrite/config'
 import {ContainerE as Container, Postcard} from '../component/index'
-import PostCard from '../component/Postcard'
+import PostCard from '../component/PostCard'
 import { useSelector } from 'react-redux'
 
 
