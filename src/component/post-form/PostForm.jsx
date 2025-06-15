@@ -4,18 +4,18 @@ import { Button, Input, Select, RTE } from '../index'
 import appwriteService from "../../appwrite/config"
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-// let previewFile = ""
-// let strippedUrl = ""
+let previewFile = ""
+let strippedUrl = ""
 
 
 
 function PostForm({ post }) {
 
 
-    // if (post) {
-    //     previewFile = appwriteService.getFilePrevie(post.featuredImage)
-    //     strippedUrl = previewFile.split("://")[1]
-    // }
+    if (post) {
+        previewFile = appwriteService.getFilePrevie(post.featuredImage)
+        strippedUrl = previewFile.split("://")[1]
+    }
 
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
         defaultValues: {
@@ -135,11 +135,11 @@ function PostForm({ post }) {
                 {post && (
                     <div className="w-full mb-4">
                         {
-                            console.log(appwriteService.getFilePrevie(post.featuredImage))
+                            console.log(strippedUrl)
                             
                         }
                         <img
-                            src={appwriteService.getFilePrevie(post.featuredImage)}
+                            src={strippedUrl}
                             alt={post.title}
                             className="rounded-lg"
                         />
