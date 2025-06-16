@@ -11,7 +11,22 @@ import { ContainerE as Container } from '../index'
 
 function PostForm({ post }) {
     const userData = useSelector(state => state.auth.userData)
-    const [isUserReady, setIsUserReady] = useState(false);
+    // ⛔ Exit before running any hooks if userData is not ready
+    if (!userData || !userData.$id) {
+        return (
+            <div className='w-full py-8 mt-4 text-center'>
+                <Container>
+                    <div className='flex flex-wrap'>
+                        <div className='p-2 w-full'>
+                            <h1 className='text-2xl ml-8 font-bold hover:text-gray-500'>
+                                Loading...
+                            </h1>
+                        </div>
+                    </div>
+                </Container>
+            </div>
+        );
+    }
 
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
         defaultValues: {
@@ -34,11 +49,11 @@ function PostForm({ post }) {
     }
 
 
-    useEffect(() => {
-        if (userData && userData.$id) {
-            setIsUserReady(true);
-        }
-    }, [userData]);
+    // useEffect(() => {
+    //     if (userData && userData.$id) {
+    //         setIsUserReady(true);
+    //     }
+    // }, [userData]);
 
 
 
