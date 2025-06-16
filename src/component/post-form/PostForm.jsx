@@ -83,22 +83,22 @@ function PostForm({ post }) {
     }, [watch, slugTransform, setValue])
 
 
-    if (!isUserReady) {
-        return (
-            <div className='w-full py-8 mt-4 text-center'>
-                <Container>
-                    <div className='flex flex-wrap'>
-                        <div className='p-2 w-full'>
-                            <h1 className='text-2xl ml-8 font-bold hover:text-gray-500'>
-                                Loading.....
-                            </h1>
-                        </div>
+    // if (!isUserReady) {
+    //     return (
+    //         <div className='w-full py-8 mt-4 text-center'>
+    //             <Container>
+    //                 <div className='flex flex-wrap'>
+    //                     <div className='p-2 w-full'>
+    //                         <h1 className='text-2xl ml-8 font-bold hover:text-gray-500'>
+    //                             Loading.....
+    //                         </h1>
+    //                     </div>
 
-                    </div>
-                </Container>
-            </div>
-        )
-    }
+    //                 </div>
+    //             </Container>
+    //         </div>
+    //     )
+    // }
 
 
 
