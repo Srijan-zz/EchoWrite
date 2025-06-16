@@ -41,6 +41,8 @@ function PostForm({ post }) {
     useEffect(() => {
         if (userData && userData.$id) {
             setLoading(false);
+            console.log(userData);
+            
         }
     }, [userData]);
 
