@@ -12,8 +12,8 @@ import { ContainerE as Container } from '../index'
 function PostForm({ post }) {
     const userData = useSelector(state => state.auth.userData)
 
-    console.log("Userdata on post form: ",userData);
-    
+    console.log("Userdata on post form: ", userData);
+
     const [loading, setLoading] = useState(false);
 
 
@@ -33,12 +33,12 @@ function PostForm({ post }) {
     const navigate = useNavigate()
 
 
-    let previewFile = ""
-    let strippedUrl = ""
-    if (post) {
-        previewFile = appwriteService.getFilePrevie(post.featuredImage)
-        strippedUrl = previewFile.split("://")[1]
-    }
+    // let previewFile = ""
+    // let strippedUrl = ""
+    // if (post) {
+    //     previewFile = appwriteService.getFilePrevie(post.featuredImage)
+    //     strippedUrl = previewFile.split("://")[1]
+    // }
 
     useEffect(() => {
         const checkInterval = setInterval(() => {
@@ -62,6 +62,14 @@ function PostForm({ post }) {
 
         return ''
     })
+
+    useEffect(() => {
+        // this runs once when editing an existing post
+        if (post && post.title) {
+            setValue('slug', slugTransform(post.title), { shouldValidate: true });
+        }
+    }, [post, slugTransform, setValue]);
+
 
     React.useEffect(() => {
         const subscription = watch((value, { name }) => {
@@ -213,12 +221,9 @@ function PostForm({ post }) {
 
                 {post && (
                     <div className="w-full mb-4">
-                        {
-                            console.log(strippedUrl)
-
-                        }
+        
                         <img
-                            src={strippedUrl}
+                            src={appwriteService.getFilePrevie(post.featuredImage)}
                             alt={post.title}
                             className="rounded-lg"
                         />
