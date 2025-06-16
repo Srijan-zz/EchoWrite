@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Input, Button, Logo } from './index'
 import { Link, useNavigate } from 'react-router-dom'
 import { login } from '../store/authSlice'
 import authService from '../appwrite/auth'
-import { useDispatch } from 'react-redux'
+import { useDispatch,useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 
 
@@ -13,6 +13,10 @@ function SignUp() {
     const {register, handleSubmit} = useForm();
     const [error, setError] = useState("")
 
+    
+    const user = useSelector((state) => state.auth.userData);
+const isLoggedIn = useSelector((state) => state.auth.status);
+
     const signup = async (data) => {
         setError("")
         try {
@@ -21,8 +25,10 @@ function SignUp() {
             if (acc) {
                 const currUser = await authService.getCurrentUser(acc)
                 if (currUser) {
-                    dispatch(login(currUser))                  
-                    navigate('/')
+                    console.log("dispatching");
+                    dispatch(login({userData: currUser}))                  
+                    console.log("dispatched");
+                    
                     
                 }
             }
@@ -31,6 +37,14 @@ function SignUp() {
             setError(error.message)
         }
     }
+
+        
+    useEffect(() => {
+        if (user && isLoggedIn) {
+            navigate("/");
+        }
+    }, [user, isLoggedIn]);
+
     return (
         <div className='flex justify-center items-center'>
             <div className={`mx-auto w-full max-w-lg bg-gray-500 rounded-xl p-10 border border-black/10`}

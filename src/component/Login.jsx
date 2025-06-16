@@ -26,7 +26,7 @@ const isLoggedIn = useSelector((state) => state.auth.status);
             if(session){
                 const userData = await authService.getCurrentUser()
                 if(userData){
-                    dispatch(authLogin(userData))//store me update
+                    dispatch(authLogin({userData}))//store me update
 
                 }
             }
