@@ -11,7 +11,8 @@ let strippedUrl = ""
 
 
 function PostForm({ post }) {
-
+      const userData = useSelector(state => state.auth.userData)
+    const [isUserReady, setIsUserReady] = useState(false);
 
     if (post) {
         previewFile = appwriteService.getFilePrevie(post.featuredImage)
@@ -23,15 +24,23 @@ function PostForm({ post }) {
             title: post?.title || '',
             slug: post?.slug || '',
             content: post?.content || '',
-            status: post?.statue || ''
+            status: post?.status || ''
         }
     })
 
 
     const navigate = useNavigate()
-    const userData = useSelector(state => state.auth.userData)
+  
 
-    if(!userData){
+    
+useEffect(() => {
+    if (userData && userData.$id) {
+        setIsUserReady(true);
+    }
+}, [userData]);
+
+
+    if(!isUserReady){
         return (
             <div className='w-full py-8 mt-4 text-center'>
                 <Container>
