@@ -4,6 +4,7 @@ import { Button, Input, Select, RTE } from '../index'
 import appwriteService from "../../appwrite/config"
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import {ContainerE as Container} from '../index'
 let previewFile = ""
 let strippedUrl = ""
 
@@ -30,7 +31,22 @@ function PostForm({ post }) {
     const navigate = useNavigate()
     const userData = useSelector(state => state.auth.userData)
 
+    if(!userData){
+        return (
+            <div className='w-full py-8 mt-4 text-center'>
+                <Container>
+                    <div className='flex flex-wrap'>
+                        <div className='p-2 w-full'>
+                            <h1 className='text-2xl ml-8 font-bold hover:text-gray-500'>
+                                Loading.....
+                            </h1>
+                        </div>
 
+                    </div>
+                </Container>
+            </div>
+        )
+    }
 
 
 

@@ -30,12 +30,18 @@ export default function Post() {
     }, [slug, navigate]);
 
     const deletePost = () => {
+        console.log("deleted0");
         appwriteService.deletePost(post.$id).then((status) => {
-            if (status) {
-                appwriteService.deleteFile(post.featuredImage);
-                navigate("/");
-            }
-        });
+            // if (status) {
+                console.log("deleted1");
+                appwriteService.deleteFile(post.featuredImage).then((status2)=>{
+                    console.log("deleted2");
+                    // if(status2)
+                        navigate("/all-posts");
+                }).catch(console.error)
+                
+            // }?
+        }).catch(console.error)
     };
 
     return post ? (

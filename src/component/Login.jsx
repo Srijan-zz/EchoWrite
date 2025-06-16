@@ -5,6 +5,8 @@ import {Logo, Button, Input} from './index'
 import { useDispatch } from 'react-redux'
 import authService from '../appwrite/auth'
 import {useForm} from 'react-hook-form'
+// import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 
 function Login() {
@@ -14,6 +16,9 @@ function Login() {
     const {register,handleSubmit}=useForm()
     const [error,setError]=useState("")
 
+    const user = useSelector((state) => state.auth.user);
+const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
     const login =async(data)=>{
         setError("")
         try{
@@ -22,7 +27,10 @@ function Login() {
                 const userData = await authService.getCurrentUser()
                 if(userData){
                     dispatch(authLogin(userData))//store me update
+
+                    if(user && isLoggedIn){
                     navigate("/")
+                    }
                 }
             }
 

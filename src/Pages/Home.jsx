@@ -3,19 +3,24 @@ import appwriteService from '../appwrite/config'
 import { ContainerE as Container, Postcard } from '../component/index'
 import PostCard from '../component/PostCard'
 import { useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 
 
 function Home() {
 
     const [posts, setPosts] = useState([])
     const userData = useSelector((state) => state.auth.userData);
-
+    const location=useLocation();
 
     useEffect(() => {
-        console.log(userData);
+        // console.log(userData);
 
         if (userData) {
-            appwriteService.getPosts().then((posts) => {
+            console.log("user exists");
+            
+            appwriteService.getUserPosts(userData.$id).then((posts) => {
+                console.log(posts);
+                
                 if (posts) {
                     setPosts(posts.documents)
                 }
@@ -23,7 +28,7 @@ function Home() {
             })
         }
         
-    }, [userData])
+    }, [userData, location.state?.refresh])
 
     if (!userData) {
         return (
