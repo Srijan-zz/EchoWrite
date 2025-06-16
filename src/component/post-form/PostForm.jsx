@@ -14,12 +14,8 @@ function PostForm({ post }) {
     const [loading, setLoading] = useState(true);
     
     
-    useEffect(() => {
-        if (userData && userData.$id) {
-            setLoading(false);
-        }
-    }, [userData]);
-    
+   
+
     //  Exit before running any hooks if userData is not ready
     if (loading) {
         return (
@@ -58,11 +54,11 @@ function PostForm({ post }) {
     }
 
 
-    // useEffect(() => {
-    //     if (userData && userData.$id) {
-    //         setLoading(false);
-    //     }
-    // }, [userData]);
+    useEffect(() => {
+        if (userData && userData.$id) {
+            setLoading(false);
+        }
+    }, [userData]);
 
 
 
