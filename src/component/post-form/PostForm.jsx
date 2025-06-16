@@ -11,10 +11,10 @@ import { ContainerE as Container } from '../index'
 
 function PostForm({ post }) {
     const userData = useSelector(state => state.auth.userData)
-    const [loading, setLoading] = useState(true);
-    
-    
-   
+    const [loading, setLoading] = useState(false);
+
+
+
 
 
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
@@ -37,16 +37,18 @@ function PostForm({ post }) {
         strippedUrl = previewFile.split("://")[1]
     }
 
-
     useEffect(() => {
-        if (userData && userData.$id) {
-            setLoading(false);
-            console.log(userData);
-            
-        }
+        const checkInterval = setInterval(() => {
+            if (userData && userData.$id) {
+                setLoading(true);
+                clearInterval(checkInterval);
+            }
+        }, 100); // Adjust timing as needed
+
+        return () => clearInterval(checkInterval);
     }, [userData]);
 
-  const slugTransform = useCallback((value) => {
+    const slugTransform = useCallback((value) => {
         if (value && typeof (value) === 'string') {
             return value
                 .trim()
@@ -73,7 +75,7 @@ function PostForm({ post }) {
 
 
     //  Exit before running any hooks if userData is not ready
-    if (loading) {
+    if (!loading) {
         return (
             <div className='w-full py-8 mt-4 text-center'>
                 <Container>
