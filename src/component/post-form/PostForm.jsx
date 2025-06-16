@@ -11,8 +11,17 @@ import { ContainerE as Container } from '../index'
 
 function PostForm({ post }) {
     const userData = useSelector(state => state.auth.userData)
-    // ⛔ Exit before running any hooks if userData is not ready
-    if (!userData || !userData.$id) {
+    const [loading, setLoading] = useState(true);
+    
+    
+    useEffect(() => {
+        if (userData && userData.$id) {
+            setLoading(false);
+        }
+    }, [userData]);
+    
+    //  Exit before running any hooks if userData is not ready
+    if (loading) {
         return (
             <div className='w-full py-8 mt-4 text-center'>
                 <Container>
@@ -51,7 +60,7 @@ function PostForm({ post }) {
 
     // useEffect(() => {
     //     if (userData && userData.$id) {
-    //         setIsUserReady(true);
+    //         setLoading(false);
     //     }
     // }, [userData]);
 
