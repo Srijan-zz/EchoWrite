@@ -1,23 +1,17 @@
-import React, { useCallback,useState,useEffect } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button, Input, Select, RTE } from '../index'
 import appwriteService from "../../appwrite/config"
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import {ContainerE as Container} from '../index'
-let previewFile = ""
-let strippedUrl = ""
+import { ContainerE as Container } from '../index'
+
 
 
 
 function PostForm({ post }) {
-      const userData = useSelector(state => state.auth.userData)
+    const userData = useSelector(state => state.auth.userData)
     const [isUserReady, setIsUserReady] = useState(false);
-
-    if (post) {
-        previewFile = appwriteService.getFilePrevie(post.featuredImage)
-        strippedUrl = previewFile.split("://")[1]
-    }
 
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
         defaultValues: {
@@ -30,17 +24,51 @@ function PostForm({ post }) {
 
 
     const navigate = useNavigate()
-  
 
-    
-useEffect(() => {
-    if (userData && userData.$id) {
-        setIsUserReady(true);
+
+    let previewFile = ""
+    let strippedUrl = ""
+    if (post) {
+        previewFile = appwriteService.getFilePrevie(post.featuredImage)
+        strippedUrl = previewFile.split("://")[1]
     }
-}, [userData]);
 
 
-    if(!isUserReady){
+    useEffect(() => {
+        if (userData && userData.$id) {
+            setIsUserReady(true);
+        }
+    }, [userData]);
+
+
+
+    const slugTransform = useCallback((value) => {
+        if (value && typeof (value) === 'string') {
+            return value
+                .trim()
+                .toLowerCase()
+                .replace(/[^a-zA-Z\d\s]+/g, "-")
+                .replace(/\s/g, "-");
+        }
+
+        return ''
+    })
+
+    React.useEffect(() => {
+        const subscription = watch((value, { name }) => {
+            if (name === 'title') {
+                setValue('slug', slugTransform(value, { shouldValidate: true }))
+            }
+        })
+
+
+        return () =>
+            subscription.unsubscribe()
+
+    }, [watch, slugTransform, setValue])
+
+
+    if (!isUserReady) {
         return (
             <div className='w-full py-8 mt-4 text-center'>
                 <Container>
@@ -100,30 +128,6 @@ useEffect(() => {
         }
     }
 
-    const slugTransform = useCallback((value) => {
-        if (value && typeof (value) === 'string') {
-            return value
-                .trim()
-                .toLowerCase()
-                .replace(/[^a-zA-Z\d\s]+/g, "-")
-                .replace(/\s/g, "-");
-        }
-
-        return ''
-    })
-
-    React.useEffect(() => {
-        const subscription = watch((value, { name }) => {
-            if (name === 'title') {
-                setValue('slug', slugTransform(value, { shouldValidate: true }))
-            }
-        })
-
-
-        return () =>
-            subscription.unsubscribe()
-
-    }, [watch, slugTransform, setValue])
 
     return (
         <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
@@ -156,12 +160,12 @@ useEffect(() => {
                     accept="image/png, image/jpg, image/jpeg, image/gif"
                     {...register("image", { required: !post })}
                 />
-                
+
                 {post && (
                     <div className="w-full mb-4">
                         {
                             console.log(strippedUrl)
-                            
+
                         }
                         <img
                             src={strippedUrl}
