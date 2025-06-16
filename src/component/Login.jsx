@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState,useEffect} from 'react'
 import { data, Link, useNavigate } from 'react-router-dom'
 import { login as authLogin } from '../store/authSlice'
 import {Logo, Button, Input} from './index'
@@ -16,8 +16,8 @@ function Login() {
     const {register,handleSubmit}=useForm()
     const [error,setError]=useState("")
 
-    const user = useSelector((state) => state.auth.user);
-const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+    const user = useSelector((state) => state.auth.userData);
+const isLoggedIn = useSelector((state) => state.auth.status);
 
     const login =async(data)=>{
         setError("")
@@ -28,9 +28,6 @@ const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
                 if(userData){
                     dispatch(authLogin(userData))//store me update
 
-                    if(user && isLoggedIn){
-                    navigate("/")
-                    }
                 }
             }
 
@@ -39,6 +36,15 @@ const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
             setError(error.message)
         }
     }
+
+    
+useEffect(() => {
+    if (user && isLoggedIn) {
+        navigate("/");
+    }
+}, [user, isLoggedIn]);
+
+
   return (
     <div
     className='flex items-center justify-center w-full m-2'

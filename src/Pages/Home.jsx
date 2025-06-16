@@ -13,7 +13,7 @@ function Home() {
     const location=useLocation();
 
     useEffect(() => {
-        // console.log(userData);
+        console.log(userData);
 
         if (userData) {
             console.log("user exists");

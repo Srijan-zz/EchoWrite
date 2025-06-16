@@ -11,6 +11,9 @@ import { ContainerE as Container } from '../index'
 
 function PostForm({ post }) {
     const userData = useSelector(state => state.auth.userData)
+
+    console.log(userData);
+    
     const [loading, setLoading] = useState(false);
 
 
